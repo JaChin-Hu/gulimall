@@ -17,8 +17,7 @@ spring:
 #          dataId: third-party
 #        file-extension: yml
     alicloud:
-      access-key: LTAI5tHyRMLgAnW9UCH3kQvx
-      secret-key: 8dTIwP1o1tvF6DKXh2UUx8GAk2gNnU
+
       oss:
         endpoint: oss-cn-chengdu.aliyuncs.com
         bucket: gulimall-jachiin
