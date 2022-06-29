@@ -1,15 +1,12 @@
 package com.atguigu.gulimall.product.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.atguigu.gulimall.product.entity.CategoryEntity;
 import com.atguigu.gulimall.product.service.CategoryService;
@@ -32,14 +29,12 @@ public class CategoryController {
     private CategoryService categoryService;
 
     /**
-     * 列表
+     * 查出所有列表
      */
-    @RequestMapping("/list")
-//    @RequiresPermissions("product:category:list")
+    @RequestMapping("/list/tree")
     public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = categoryService.queryPage(params);
-
-        return R.ok().put("page", page);
+        List<CategoryEntity> data = categoryService.listWithTree();
+        return R.ok().put("data", data);
     }
 
 
@@ -54,36 +49,32 @@ public class CategoryController {
         return R.ok().put("category", category);
     }
 
-    /**
-     * 保存
-     */
-    @RequestMapping("/save")
+    @PostMapping("/save")
 //    @RequiresPermissions("product:category:save")
     public R save(@RequestBody CategoryEntity category){
 		categoryService.save(category);
-
         return R.ok();
     }
 
-    /**
-     * 修改
-     */
-    @RequestMapping("/update")
+    @PostMapping("/updates")
+    public R batchUpdate(@RequestBody CategoryEntity[] categories) {
+        categoryService.updateBatchById(Arrays.asList(categories));
+        return R.ok();
+    }
+
+    @PostMapping("/update")
 //    @RequiresPermissions("product:category:update")
     public R update(@RequestBody CategoryEntity category){
-		categoryService.updateById(category);
-
+//		categoryService.updateById(category);
+        categoryService.updateCascade(category);
         return R.ok();
     }
 
-    /**
-     * 删除
-     */
-    @RequestMapping("/delete")
+    @PostMapping("/delete")
 //    @RequiresPermissions("product:category:delete")
     public R delete(@RequestBody Long[] ids){
-		categoryService.removeByIds(Arrays.asList(ids));
-
+//		categoryService.removeByIds(Arrays.asList(ids));
+        categoryService.removeMenuByIds(ids);
         return R.ok();
     }
 

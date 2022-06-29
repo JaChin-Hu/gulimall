@@ -8,6 +8,7 @@
 
 package com.atguigu.common.utils;
 
+import com.atguigu.common.exception.BizCode;
 import org.apache.http.HttpStatus;
 
 import java.util.HashMap;
@@ -39,6 +40,10 @@ public class R extends HashMap<String, Object> {
 		r.put("code", code);
 		r.put("msg", msg);
 		return r;
+	}
+
+	public static R error(BizCode bizCode) {
+		return error(bizCode.getCode(), bizCode.getMessage());
 	}
 
 	public static R ok(String msg) {

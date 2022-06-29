@@ -1,15 +1,13 @@
 package com.atguigu.gulimall.product.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.atguigu.gulimall.product.entity.CategoryBrandEntity;
 import com.atguigu.gulimall.product.service.CategoryBrandService;
@@ -30,6 +28,13 @@ import com.atguigu.common.utils.R;
 public class CategoryBrandController {
     @Autowired
     private CategoryBrandService categoryBrandService;
+
+    @GetMapping("/category/list")
+    public R categoryList(@RequestParam("brandId") Long brandId) {
+        List<CategoryBrandEntity> data = categoryBrandService.list(
+                new QueryWrapper<CategoryBrandEntity>().eq("brand_id", brandId));
+        return R.ok().put("data", data);
+    }
 
     /**
      * 列表
@@ -60,8 +65,7 @@ public class CategoryBrandController {
     @RequestMapping("/save")
 //    @RequiresPermissions("product:categorybrand:save")
     public R save(@RequestBody CategoryBrandEntity categoryBrand){
-		categoryBrandService.save(categoryBrand);
-
+		categoryBrandService.saveDetail(categoryBrand);
         return R.ok();
     }
 

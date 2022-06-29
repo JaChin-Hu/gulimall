@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: gulimall-search
+  datasource:
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.33.10:3306/gulimall_pms?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: gulimall
+  elasticsearch:
+    rest:
+      uris: ["http://192.168.33.10:9200"]
+      connection-timeout: 2s

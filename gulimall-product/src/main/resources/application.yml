@@ -1,20 +1,33 @@
 server:
   port: 10000
+logging:
+  level:
+    com.atguigu.gulimall: debug
 spring:
   application:
-    name: product
+    name: PRODUCT
   datasource:
     username: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://192.168.33.10:3306/gulimall_pms?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+  redis:
+    host: 192.168.33.10
+    port: 6379
   cloud:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
         namespace: gulimall
+    alicloud:
+      access-key: LTAI5tHyRMLgAnW9UCH3kQvx
+      secret-key: 8dTIwP1o1tvF6DKXh2UUx8GAk2gNnU
+      oss:
+        endpoint: https://oss-cn-chengdu.aliyuncs.com
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
   global-config:
     db-config:
       id-type: auto
+      logic-delete-value: 1
+      logic-not-delete-value: 0
